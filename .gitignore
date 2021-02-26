@@ -1,0 +1,20 @@
+.env
+*.pyc
+venv*
+env
+*.tags*
+
+.cache
+_cache/*
+
+# local development
+database.database
+*.db
+*.db-journal
+
+# Visual Studio Code
+.vscode
+
+# ignore built assets
+todo/static/public
+.webassets-cache
