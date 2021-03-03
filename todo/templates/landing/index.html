@@ -1,0 +1,34 @@
+{% extends 'base_layout.html' %}
+{% from "_formhelpers.html" import render_field %}
+
+
+{% block content %}
+
+{% if current_user.is_authenticated %}
+
+<p> Welcome, {{ current_user.username }}.</p>
+
+<p>To do:</p>
+<ul>
+    {% for todo in current_user.todos %}
+    <li>{{ todo.name }}
+        <form method="post" action="/delete">
+            <input type="hidden" name="delete" value="{{ todo.id }}">
+            <input type="submit" value="Delete">
+        </form>
+    </li>
+
+    {% endfor %}
+</ul>
+<form method="POST">
+    {{ form.csrf_token }}
+
+    {{ render_field(form.todo) }}
+    <input type="submit" value="Submit">
+</form>
+
+{% else %}
+Hello, You've just stumbled upon the best to do app ever! <br>
+Please register or log in to start tracking your to-dos.
+{% endif %}
+{% endblock %}

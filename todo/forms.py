@@ -10,15 +10,13 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password:", validators=[required()])
 
     def validate_username(self, username):
-        user = User.query.filter_by(name=username.data).first()
+        user = User.query.filter_by(username=username.data).first()
         if not user or not check_password_hash(user.password, self.password.data):
-            self.username.errors.append("Invalid email or password.")
-
-    # add validation here
+            self.username.errors.append("Invalid username or password.")
 
 
 class RegisterForm(FlaskForm):
-    username = StringField("Username:", validators=[required()])
+    username = StringField("Username:", validators=[required(), Length(min=4)])
     password = PasswordField(
         "Password:",
         validators=[
@@ -30,9 +28,9 @@ class RegisterForm(FlaskForm):
     confirm = PasswordField("Confirm Password:")
 
     def validate_username(self, username):
-        user = User.query.filter_by(name=username.data).first()
+        user = User.query.filter_by(username=username.data).first()
         if user:
-            self.username.errors.append("That email already has an account.")
+            self.username.errors.append("That username already has an account.")
 
 
 class ToDoForm(FlaskForm):
