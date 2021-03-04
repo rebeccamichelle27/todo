@@ -6,7 +6,7 @@ from todo.models import User
 
 # look at user validation, how it was done in my other todo app vs yumroad vs miguel
 class LoginForm(FlaskForm):
-    email = StringField("Email:", validators=[email(), required()])
+    email = StringField("Email:", validators=[required()])
     password = PasswordField("Password:", validators=[required()])
 
     def validate_email(self, email):

@@ -9,7 +9,7 @@ class BaseConfig:
 
 class DevConfig(BaseConfig):
     # telling sqlalchemy where our database lives
-    SQLALCHEMY_DATABASE_URI = "sqlite:///dev.db"
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL") or "sqlite:///dev.db"
     WTF_CSRF_ENABLED = True
     SQLALCHEMY_ECHO = True
     # SECRET_KEY = os.getenv('SECRET_KEY')
@@ -29,4 +29,3 @@ class ProdConfig(BaseConfig):
 
 
 configurations = {"dev": DevConfig, "test": TestConfig, "prod": ProdConfig}
-
