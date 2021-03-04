@@ -15,7 +15,7 @@ def test_logged_in_index_page(client, init_database, authenticated_request):
     response = client.get(url_for("landing.index"))
 
     assert response.status_code == 200
-    assert b"Welcome, susan123" in response.data
+    assert b"Welcome, susan123@example.com" in response.data
     assert b"To do:" in response.data
 
 

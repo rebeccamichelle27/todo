@@ -22,15 +22,14 @@ def init_database():
 @pytest.fixture
 # Create a user and log them in
 def authenticated_request(client):
-    new_user = User(username="susan123")
+    new_user = User(email="susan123@example.com")
     new_user.set_password("123456")
     db.session.add(new_user)
     db.session.commit()
 
     response = client.post(
         url_for("user.login"),
-        # not sure how to update the password below to make sure it matches the hashed one
-        data={"username": "susan123", "password": "123456"},
+        data={"email": "susan123@example.com", "password": "123456"},
         follow_redirects=True,
     )
     yield client

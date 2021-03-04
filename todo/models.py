@@ -9,15 +9,15 @@ class User(UserMixin, db.Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     todos = db.relationship("Todo")
 
-    @validates("username")
-    def validate_username(self, key, username):
-        if len(username.strip()) <= 3:
-            raise ValueError("needs to have a username")
-        return username
+    @validates("email")
+    def validate_email(self, key, email):
+        if len(email.strip()) <= 3:
+            raise ValueError("needs to have an email")
+        return email
 
     def set_password(self, password):
         """Create hashed password."""
@@ -28,7 +28,9 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password, password)
 
     def __repr__(self):
-        return f"<(User(id={self.id}, name={repr(self.username)}, todos={repr(self.todos)})>"
+        return (
+            f"<(User(id={self.id}, email={repr(self.email)}, todos={repr(self.todos)})>"
+        )
 
 
 class Todo(db.Model):

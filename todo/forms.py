@@ -1,22 +1,22 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField
-from wtforms.validators import Length, required, EqualTo
+from wtforms.validators import Length, required, EqualTo, email
 from werkzeug.security import check_password_hash
 from todo.models import User
 
 # look at user validation, how it was done in my other todo app vs yumroad vs miguel
 class LoginForm(FlaskForm):
-    username = StringField("Username:", validators=[required()])
+    email = StringField("Email:", validators=[email(), required()])
     password = PasswordField("Password:", validators=[required()])
 
-    def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first()
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
         if not user or not check_password_hash(user.password, self.password.data):
-            self.username.errors.append("Invalid username or password.")
+            self.email.errors.append("Invalid email or password.")
 
 
 class RegisterForm(FlaskForm):
-    username = StringField("Username:", validators=[required(), Length(min=4)])
+    email = StringField("Email:", validators=[email(), required(), Length(min=4)])
     password = PasswordField(
         "Password:",
         validators=[
@@ -27,11 +27,11 @@ class RegisterForm(FlaskForm):
     )
     confirm = PasswordField("Confirm Password:")
 
-    def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first()
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
         if user:
-            self.username.errors.append("That username already has an account.")
+            self.email.errors.append("That email already has an account.")
 
 
 class ToDoForm(FlaskForm):
-    todo = StringField("To do:", validators=[required(), Length(min=4, max=60)])
+    todo = StringField("New to do:", validators=[required(), Length(min=4, max=60)])

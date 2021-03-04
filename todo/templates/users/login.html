@@ -4,22 +4,6 @@
 {% block title %} Login {% endblock %}
 
 {% block content %}
-<!-- <div class="text-center">
-    <form class="form-signin w-25" method="POST">
-        {{ form.csrf_token }}
-
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="username" class="sr-only"> {{ render_field(form.username) }}
-        </label>
-        <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-        <label for="inputPassword" class="sr-only"> {{ render_field(form.password) }}
-        </label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-
-        <button id="signin" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
-    </form>
-</div> -->
 
 <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
@@ -29,7 +13,7 @@
         {{ form.csrf_token }}
 
 
-        {{ render_field(form.username) }}
+        {{ render_field(form.email) }}
         {{ render_field(form.password) }}
 
         <button id="signin" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
@@ -37,13 +21,4 @@
     </form>
 </div>
 
-
-<!-- <form method="POST">
-    {{ form.csrf_token }}
-
-    {{ render_field(form.username) }}
-    {{ render_field(form.password) }}
-
-    <button type="submit" class="btn btn-primary"> Login </button>
-</form> -->
 {% endblock %}

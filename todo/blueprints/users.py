@@ -35,7 +35,7 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
 
-        user = User(username=form.username.data)
+        user = User(email=form.email.data)
         user.set_password(form.password.data)
 
         db.session.add(user)
@@ -59,7 +59,7 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.query.filter_by(email=form.email.data).first()
 
         login_user(user)
         return redirect(session.get("after_login") or url_for("landing.index"))

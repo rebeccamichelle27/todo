@@ -4,23 +4,23 @@ import pytest
 from todo.models import db, User
 
 
-EXAMPLE_USERNAME = "susan123"
+EXAMPLE_EMAIL = "susan123@example.com"
 EXAMPLE_PASSWORD = "123456"
 
 VALID_LOGIN_PARAMS = {
-    "username": EXAMPLE_USERNAME,
+    "email": EXAMPLE_EMAIL,
     "password": EXAMPLE_PASSWORD,
 }
 
 VALID_REGISTER_PARAMS = {
-    "username": EXAMPLE_USERNAME,
+    "email": EXAMPLE_EMAIL,
     "password": EXAMPLE_PASSWORD,
     "confirm": EXAMPLE_PASSWORD,
 }
 
 
-def create_user(username=EXAMPLE_USERNAME, password=EXAMPLE_PASSWORD):
-    user = User(username=username)
+def create_user(email=EXAMPLE_EMAIL, password=EXAMPLE_PASSWORD):
+    user = User(email=email)
     user.set_password(password)
     db.session.add(user)
     db.session.commit()
@@ -45,7 +45,7 @@ def test_get_register_route(client, init_database):
     response = client.get(url_for("user.register"))
     assert response.status_code == 200
     assert "Sign up" in str(response.data)
-    assert "Username" in str(response.data)
+    assert "Email" in str(response.data)
     assert "Confirm Password" in str(response.data)
 
 
@@ -63,7 +63,7 @@ def test_register_with_existing_user(client, init_database):
         "/register", data=VALID_REGISTER_PARAMS, follow_redirects=True
     )
     assert response.status_code == 200
-    assert b"That username already has an account" in response.data
+    assert b"That email already has an account" in response.data
     assert b"Sign up" in response.data
 
     assert b"Registered successfully" not in response.data
@@ -82,7 +82,7 @@ def test_get_login_route(client, init_database):
     response = client.get(url_for("user.login"))
     assert response.status_code == 200
     assert "Login" in str(response.data)
-    assert "Username" in str(response.data)
+    assert "Email" in str(response.data)
     assert "Password" in str(response.data)
 
 
@@ -108,12 +108,12 @@ def test_login_bad_password(client, init_database):
     create_user()
     response = client.post(
         url_for("user.login"),
-        data=dict(username=EXAMPLE_USERNAME, password="badpassword"),
+        data=dict(email=EXAMPLE_EMAIL, password="badpassword"),
         follow_redirects=True,
     )
 
     assert response.status_code == 200
-    assert "Invalid username or password" in str(response.data)
+    assert "Invalid email or password" in str(response.data)
 
 
 def test_logout(client, init_database, authenticated_request):
