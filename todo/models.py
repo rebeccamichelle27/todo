@@ -40,6 +40,7 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    completed = db.Column(db.Boolean, nullable=False, default=False)
 
     def __repr__(self):
         return f"<(Todo(id={self.id}, name={repr(self.name)}, user_id={self.user_id})>"

@@ -74,6 +74,9 @@ def logout():
     return redirect(url_for("landing.index"))
 
 
+# TODO: move these
+
+
 @user_bp.route("/delete", methods=["POST"])
 @login_required
 @csrf.exempt
@@ -86,6 +89,23 @@ def delete():
 
     if todo:
         db.session.delete(todo)
+        db.session.commit()
+
+    return redirect(url_for("landing.index"))
+
+
+@user_bp.route("/toggle", methods=["POST"])
+@login_required
+@csrf.exempt
+def toggle():
+
+    # checks to see if the todo matches the user that's in the session
+    todo = Todo.query.filter_by(
+        user_id=current_user.id, id=request.form["toggle"]
+    ).first()
+
+    if todo:
+        todo.completed = not todo.completed
         db.session.commit()
 
     return redirect(url_for("landing.index"))

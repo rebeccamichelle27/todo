@@ -11,10 +11,24 @@
 <p>To do:</p>
 <ul>
     {% for todo in current_user.todos %}
-    <li>{{ todo.name }}
+    <li>
+        {% if todo.completed %}
+        <strike>
+            {% endif %}
+
+            {{ todo.name }}
+
+            {% if todo.completed %}
+        </strike>
+        {% endif %}
+
         <form method="post" action="/delete">
             <input type="hidden" name="delete" value="{{ todo.id }}">
             <input type="submit" value="Delete">
+        </form>
+        <form method="post" action="/toggle">
+            <input type="hidden" name="toggle" value="{{ todo.id }}">
+            <input type="submit" value="Toggle">
         </form>
     </li>
 
