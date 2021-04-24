@@ -5,12 +5,14 @@
 {% block title %} Register {% endblock %}
 
 {% block content %}
-<form method="POST">
+<form class="form-signin w-25" method="POST">
     {{ form.csrf_token }}
     {{ render_field(form.email) }}
     {{ render_field(form.password) }}
     {{ render_field(form.confirm) }}
 
-    <button type="submit" class="btn btn-primary"> Sign up </button>
+    <button type="submit" class="btn btn-info btn-block"> Sign up </button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
+
 </form>
 {% endblock %}

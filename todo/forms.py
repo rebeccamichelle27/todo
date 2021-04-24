@@ -6,8 +6,8 @@ from todo.models import User
 
 # look at user validation, how it was done in my other todo app vs yumroad vs miguel
 class LoginForm(FlaskForm):
-    email = StringField("Email:", validators=[required()])
-    password = PasswordField("Password:", validators=[required()])
+    email = StringField("Email", validators=[required()])
+    password = PasswordField("Password", validators=[required()])
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
@@ -16,16 +16,16 @@ class LoginForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
-    email = StringField("Email:", validators=[email(), required(), Length(min=4)])
+    email = StringField("Email", validators=[email(), required(), Length(min=4)])
     password = PasswordField(
-        "Password:",
+        "Password",
         validators=[
             required(),
             Length(min=4),
             EqualTo("confirm", message="Passwords must match"),
         ],
     )
-    confirm = PasswordField("Confirm Password:")
+    confirm = PasswordField("Confirm Password")
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()

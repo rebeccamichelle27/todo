@@ -6,10 +6,13 @@
 
 {% if current_user.is_authenticated %}
 
-<p> Welcome, {{ current_user.email }}.</p>
+<p> Welcome, {{ current_user.email }}</p>
+<br>
 
-<p>To do:</p>
-<ul>
+<h4>To do list</h4>
+<hr width="50%">
+
+<ul style="list-style: none;">
     {% for todo in current_user.todos %}
     <li>
         {% if todo.completed %}
@@ -21,24 +24,27 @@
             {% if todo.completed %}
         </strike>
         {% endif %}
-
-        <form method="post" action="/delete">
-            <input type="hidden" name="delete" value="{{ todo.id }}">
-            <input type="submit" value="Delete">
-        </form>
         <form method="post" action="/toggle">
             <input type="hidden" name="toggle" value="{{ todo.id }}">
-            <input type="submit" value="Toggle">
+            <button type="submit" class="btn btn-info btn-sm"> Toggle </button>
         </form>
+        <form method="post" action="/delete">
+            <input type="hidden" name="delete" value="{{ todo.id }}">
+            <button type="submit" class="btn btn-outline-info btn-sm">Delete</button>
+        </form>
+
     </li>
 
     {% endfor %}
 </ul>
+
+<hr width="50%">
+
 <form method="POST">
     {{ form.csrf_token }}
 
     {{ render_field(form.todo) }}
-    <input type="submit" value="Submit">
+    <button type="submit" class="btn btn-outline-dark btn-block">Submit</button>
 </form>
 
 {% else %}

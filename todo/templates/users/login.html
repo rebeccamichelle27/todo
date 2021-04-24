@@ -5,20 +5,16 @@
 
 {% block content %}
 
-<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+<form class="form-signin w-25" method="POST">
 
-<div class="text-center">
-    <form class="form-signin w-25" method="POST">
-
-        {{ form.csrf_token }}
+    {{ form.csrf_token }}
 
 
-        {{ render_field(form.email) }}
-        {{ render_field(form.password) }}
+    {{ render_field(form.email) }}
+    {{ render_field(form.password) }}
 
-        <button id="signin" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
-    </form>
-</div>
+    <button id="signin" class="btn btn-info btn-block" type="submit">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
+</form>
 
 {% endblock %}
